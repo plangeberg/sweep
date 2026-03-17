@@ -54,6 +54,8 @@ cp config.template.json config.json
 }
 ```
 
+**Why throttle on Cable**: Sweep crawls UNC shares (shared network drives). Running flat out can generate enough I/O to degrade the file server for other users. `throttle_ms: 500` adds a half-second pause between directories to keep the load invisible. Do not set to 0 on shared infrastructure.
+
 ## How to Run
 ```bash
 # First run — starts fresh crawl
