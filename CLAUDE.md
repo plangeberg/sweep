@@ -31,7 +31,7 @@ cp config.template.json config.json
 | `output.database` | `config.json` | SQLite database file path | `sweep.db` |
 | `output.log_file` | `config.json` | Append-only log file | `sweep.log` |
 | `output.status_file` | `config.json` | JSON status file (machine-readable) | `sweep-status.json` |
-| `crawler.throttle_ms` | `config.json` | Pause between directories (ms). 0 = full speed. | `0` |
+| `crawler.throttle_ms` | `config.json` | Pause between directories (ms). 0 = full speed (warns + 5s delay). | `500` |
 | `crawler.hash_files` | `config.json` | Compute content hash per file (for dedup) | `false` |
 | `crawler.max_depth` | `config.json` | Maximum directory recursion depth | `20` |
 | `crawler.skip_dirs` | `config.json` | Directory names to skip (case-insensitive) | See template |
@@ -43,6 +43,7 @@ cp config.template.json config.json
 {
   "paths": ["/mnt/c", "/mnt/d"],
   "crawler": { "throttle_ms": 0, "hash_files": true }
+  "_comment": "throttle_ms: 0 is fine for local drives. You'll get a 5-second warning on startup."
 }
 ```
 

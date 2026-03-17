@@ -45,6 +45,15 @@ def cmd_crawl(args):
                 config["crawler"]["max_depth"])
     logger.info("")
 
+    if config["crawler"]["throttle_ms"] == 0:
+        logger.warning("*** THROTTLE IS DISABLED ***")
+        logger.warning("Running at full speed against shared/network drives can")
+        logger.warning("degrade the file server for other users.")
+        logger.warning("If you don't need full speed, set throttle_ms in your config.")
+        logger.warning("Starting in 5 seconds... (Ctrl+C to abort)")
+        import time
+        time.sleep(5)
+
     # Open database
     db = SweepDatabase(config["output"]["database"])
 

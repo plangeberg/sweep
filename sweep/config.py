@@ -14,7 +14,7 @@ DEFAULT_CONFIG = {
         "status_file": "sweep-status.json",
     },
     "crawler": {
-        "throttle_ms": 0,
+        "throttle_ms": 500,
         "hash_files": False,
         "max_depth": 20,
         "skip_dirs": [
