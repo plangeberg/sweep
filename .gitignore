@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Sweep runtime
+*.db
+*.db-wal
+*.db-shm
+config.json
+sweep.log
+sweep-status.json
+
+# Environment
+.env
+*.local

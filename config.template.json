@@ -1,0 +1,23 @@
+{
+  "_comment": "Sweep configuration — copy to config.json and fill in real values. config.json is gitignored.",
+  "paths": [
+    "REPLACE_ME_WITH_PATH_1",
+    "REPLACE_ME_WITH_PATH_2"
+  ],
+  "output": {
+    "database": "sweep.db",
+    "log_file": "sweep.log",
+    "status_file": "sweep-status.json"
+  },
+  "crawler": {
+    "throttle_ms": 0,
+    "hash_files": false,
+    "max_depth": 20,
+    "skip_dirs": [
+      "node_modules", ".git", "__pycache__", ".venv", "venv",
+      "$RECYCLE.BIN", "System Volume Information", ".vs", "bin", "obj"
+    ],
+    "skip_extensions": [],
+    "batch_commit_size": 500
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Sweep",
+  "slug": "sweep",
+  "description": "Filesystem crawler and catalog — crawls paths, catalogs every file and folder, stores metadata in SQLite. Resumable, throttled, standalone CLI.",
+  "version": "0.1.0",
+  "context": "czechito",
+  "gitlab": "tcdz/sweep",
+  "github": "plangeberg/sweep",
+  "status": "phase-1-build"
+}
