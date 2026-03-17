@@ -1,0 +1,1 @@
+/mnt/d/SynologyDrive/czechito/brain/claude-config/commands/list.md
