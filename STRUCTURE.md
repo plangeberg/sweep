@@ -20,6 +20,7 @@
 | `sweep/progress.py` | Status file, log file, console output, ETA |
 | **Docs** | |
 | `docs/brochure.md` | What is Sweep, what it does, what it's NOT for |
+| `docs/sweep.html` | Dropzone landing page (dark theme, standalone) |
 | `docs/technical/schema.md` | SQLite database schema reference |
 | `docs/technical/error-categories.md` | Error taxonomy with query examples |
 | **Other** | |

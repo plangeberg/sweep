@@ -40,7 +40,7 @@ Sweep crawls your drives and network shares, catalogs every file and folder, and
 | **Quick status** | `cat sweep-status.json` |
 | **Find PDFs** | `python3 sweep.py -q "extension=.pdf"` |
 | **Find large files** | `python3 sweep.py -q "min_size=100000000"` |
-| **Find by path** | `python3 sweep.py -q "path=/mnt/d/Projects"` |
+| **Find by path** | `python3 sweep.py -q "path=/projects/data"` |
 | **Dry run** | `python3 sweep.py -c config.json --dry-run` |
 | **Version** | `python3 sweep.py --version` |
 | **Help** | `python3 sweep.py --help` |
@@ -48,15 +48,16 @@ Sweep crawls your drives and network shares, catalogs every file and folder, and
 ## Setup (2 minutes)
 
 ```bash
-# 1. Go to the sweep directory
-cd /mnt/d/SynologyDrive/czechito/sweep/
+# 1. Clone the repo
+git clone https://github.com/plangeberg/sweep.git
+cd sweep/
 
 # 2. Copy the config template
 cp config.template.json config.json
 
 # 3. Edit config.json — set your paths
-#    Home example:  "paths": ["/mnt/c", "/mnt/d"]
-#    Work example:  "paths": ["\\\\server\\share\\ProjectA"]
+#    Local drives:   "paths": ["/mnt/c", "/mnt/d"]
+#    Network shares: "paths": ["\\\\server\\share\\ProjectA"]
 
 # 4. Run it
 python3 sweep.py --config config.json
@@ -86,6 +87,10 @@ Edit `config.json` (copy from `config.template.json` first):
 | `sweep.log` | Detailed log (append-only) | `tail -f sweep.log` |
 | `sweep-status.json` | Machine-readable progress | `cat sweep-status.json` |
 
+## Battle-Tested
+
+Home test: **302,684 files** across **42,732 directories**. 3 errors. 46 minutes. Resume, throttle, and error handling all working.
+
 ## Tech Stack
 
 Python 3.10+ (stdlib only) + SQLite with WAL mode. No dependencies, no install.
@@ -96,7 +101,5 @@ Python 3.10+ (stdlib only) + SQLite with WAL mode. No dependencies, no install.
 
 ---
 
-> **Full path**: `D:\SynologyDrive\czechito\sweep\`
-> **Repo**: [GitLab](http://192.168.2.13:8929/tcdz/sweep) | [GitHub](https://github.com/plangeberg/sweep)
-> **Issues**: [sweep#1](http://192.168.2.13:8929/tcdz/sweep/-/issues/1)
-> **Pipeline docs**: `robota/wiki/` (PO approval, PM plan, engineer notes)
+> **Repo**: [GitHub](https://github.com/plangeberg/sweep)
+> **Full Windows path**: `D:\SynologyDrive\czechito\sweep\`

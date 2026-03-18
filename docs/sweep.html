@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweep — Filesystem Crawler &amp; Catalog</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e4e4e7;
+    --muted: #9ca3af;
+    --accent: #60a5fa;
+    --accent2: #34d399;
+    --warn: #fbbf24;
+    --code-bg: #141720;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+
+  h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+  h1 span { color: var(--accent); }
+  .tagline { color: var(--muted); font-size: 1.1rem; font-style: italic; margin-bottom: 2rem; }
+
+  .badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .badge {
+    display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .badge-green { background: #064e3b; color: #6ee7b7; }
+  .badge-blue { background: #1e3a5f; color: #93c5fd; }
+  .badge-yellow { background: #451a03; color: #fcd34d; }
+
+  h2 { font-size: 1.4rem; margin: 2rem 0 0.75rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+  p { margin-bottom: 1rem; }
+
+  .features { list-style: none; }
+  .features li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+  .features li::before { content: "✓"; position: absolute; left: 0; color: var(--accent2); font-weight: 700; }
+  .features strong { color: var(--text); }
+
+  .not-list { list-style: none; }
+  .not-list li { padding: 0.3rem 0; padding-left: 1.5rem; position: relative; color: var(--muted); }
+  .not-list li::before { content: "✗"; position: absolute; left: 0; color: #ef4444; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { text-align: left; padding: 0.6rem 0.75rem; background: var(--surface); color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+  td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+  code { background: var(--code-bg); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; font-family: 'SF Mono', 'Fira Code', monospace; }
+
+  .code-block {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.25rem; margin: 1rem 0; overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.7;
+  }
+  .code-block .comment { color: #6b7280; }
+  .code-block .cmd { color: var(--accent2); }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem; margin: 1.5rem 0;
+  }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1rem; text-align: center;
+  }
+  .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    body { padding: 1rem 0.75rem; }
+    h1 { font-size: 2rem; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1><span>Sweep</span></h1>
+<div class="tagline">Know what you have. Find what you need. Stop losing files in the pile.</div>
+
+<div class="badges">
+  <span class="badge badge-green">Phase 1 Shipped</span>
+  <span class="badge badge-blue">Python 3.10+</span>
+  <span class="badge badge-blue">SQLite</span>
+  <span class="badge badge-yellow">Zero Dependencies</span>
+</div>
+
+<h2>The Problem</h2>
+<p>You hoard data to avoid losing it, then lose data because you have too much. 2, 3, 4 copies of the same thing scattered across drives and network shares. Millions of files across dozens of folders. No way to know what's where without manually clicking through File Explorer for hours.</p>
+
+<h2>The Solution</h2>
+<p>Sweep crawls your drives and network shares, catalogs every file and folder, and stores the results in a searchable SQLite database. Run it once, walk away, come back to a complete inventory. Kill it anytime &mdash; it picks up where it left off.</p>
+
+<h2>Key Features</h2>
+<ul class="features">
+  <li><strong>Set it and forget it</strong> &mdash; point it at paths, run one command, walk away for hours or days</li>
+  <li><strong>Unkillable</strong> &mdash; blue screen, power outage, Ctrl+C. Doesn't matter. It resumes exactly where it stopped.</li>
+  <li><strong>Network-safe</strong> &mdash; configurable throttle so you don't hammer shared drives or get flagged by IT</li>
+  <li><strong>Find anything</strong> &mdash; query by file extension, path, or size from the command line</li>
+  <li><strong>Zero dependencies</strong> &mdash; Python stdlib only. No pip, no venv, no admin rights. Copy and run.</li>
+  <li><strong>Two environments, one tool</strong> &mdash; home mode (full speed, dedup) and work mode (throttled, catalog-only)</li>
+</ul>
+
+<h2>What It's NOT</h2>
+<ul class="not-list">
+  <li>Not a file sync tool (it doesn't move or copy files)</li>
+  <li>Not a backup tool (it catalogs, it doesn't protect)</li>
+  <li>Not a search engine (no full-text content search &mdash; metadata only)</li>
+  <li>Not a dedup tool (it <em>finds</em> duplicates &mdash; it doesn't delete them)</li>
+  <li>Phase 1 is CLI only &mdash; no web UI yet</li>
+</ul>
+
+<h2>Battle-Tested</h2>
+<div class="stats">
+  <div class="stat"><div class="stat-value">302K</div><div class="stat-label">Files Cataloged</div></div>
+  <div class="stat"><div class="stat-value">42K</div><div class="stat-label">Directories</div></div>
+  <div class="stat"><div class="stat-value">3</div><div class="stat-label">Errors</div></div>
+  <div class="stat"><div class="stat-value">46m</div><div class="stat-label">Runtime</div></div>
+</div>
+
+<h2>Quick Reference</h2>
+<table>
+  <thead><tr><th>What</th><th>Command</th></tr></thead>
+  <tbody>
+    <tr><td>Start a crawl</td><td><code>python3 sweep.py -c config.json</code></td></tr>
+    <tr><td>Resume a crawl</td><td><code>python3 sweep.py -c config.json</code> (same command)</td></tr>
+    <tr><td>Check progress</td><td><code>python3 sweep.py --status</code></td></tr>
+    <tr><td>Watch live</td><td><code>tail -f sweep.log</code></td></tr>
+    <tr><td>Find PDFs</td><td><code>python3 sweep.py -q "extension=.pdf"</code></td></tr>
+    <tr><td>Find large files</td><td><code>python3 sweep.py -q "min_size=100000000"</code></td></tr>
+    <tr><td>Dry run</td><td><code>python3 sweep.py -c config.json --dry-run</code></td></tr>
+  </tbody>
+</table>
+
+<h2>Quick Start</h2>
+<div class="code-block">
+<span class="comment"># Clone and configure</span>
+<span class="cmd">git clone https://github.com/plangeberg/sweep.git</span>
+<span class="cmd">cd sweep/</span>
+<span class="cmd">cp config.template.json config.json</span>
+<span class="comment"># Edit config.json &mdash; set your paths and throttle</span>
+
+<span class="comment"># Run</span>
+<span class="cmd">python3 sweep.py --config config.json</span>
+
+<span class="comment"># Query results</span>
+<span class="cmd">python3 sweep.py -q "extension=.pdf" --limit 50</span>
+</div>
+
+<h2>Configuration</h2>
+<table>
+  <thead><tr><th>Setting</th><th>What It Does</th><th>Home</th><th>Work</th></tr></thead>
+  <tbody>
+    <tr><td><code>paths</code></td><td>What to crawl</td><td>Local drives</td><td>UNC shares</td></tr>
+    <tr><td><code>throttle_ms</code></td><td>Pause between folders (ms)</td><td><code>0</code></td><td><code>500</code></td></tr>
+    <tr><td><code>hash_files</code></td><td>Compute hashes for dedup</td><td><code>true</code></td><td><code>false</code></td></tr>
+    <tr><td><code>max_depth</code></td><td>Max recursion depth</td><td><code>20</code></td><td><code>20</code></td></tr>
+    <tr><td><code>skip_dirs</code></td><td>Folders to skip</td><td colspan="2">node_modules, .git, __pycache__, etc.</td></tr>
+  </tbody>
+</table>
+
+<h2>Output</h2>
+<table>
+  <thead><tr><th>File</th><th>What It Is</th></tr></thead>
+  <tbody>
+    <tr><td><code>sweep.db</code></td><td>SQLite catalog &mdash; all file &amp; folder metadata</td></tr>
+    <tr><td><code>sweep.log</code></td><td>Append-only log with progress and errors</td></tr>
+    <tr><td><code>sweep-status.json</code></td><td>Machine-readable status (dirs, files, errors, ETA)</td></tr>
+  </tbody>
+</table>
+
+<div class="footer">
+  <p><strong>Sweep v0.1.0</strong> &mdash; Python 3.10+ (stdlib only) + SQLite with WAL mode</p>
+  <p><a href="https://github.com/plangeberg/sweep">GitHub</a></p>
+</div>
+
+</div>
+</body>
+</html>

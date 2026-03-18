@@ -21,6 +21,13 @@ Sweep crawls your drives, catalogs every file and folder into a searchable datab
 - **Zero dependencies** — Python stdlib only. Copy it anywhere and run.
 - **Two environments, one tool** — home (full speed, dedup) and work (throttled, catalog-only) via config
 
+## What It's NOT
+
+- Not a file sync tool (it doesn't move or copy files)
+- Not a backup tool (it catalogs, it doesn't protect)
+- Not a search engine (no full-text content search — metadata only)
+- Not a dedup tool (it *finds* duplicates — it doesn't delete them)
+
 ## Screenshots / Screens
 
 | Screen | What You See | What You Do |
@@ -34,7 +41,8 @@ Sweep crawls your drives, catalogs every file and folder into a searchable datab
 ## Quick Start
 
 ```bash
-cd /mnt/d/SynologyDrive/czechito/sweep/
+git clone https://github.com/plangeberg/sweep.git
+cd sweep/
 cp config.template.json config.json
 # Edit config.json — set your paths
 python3 sweep.py --config config.json
@@ -51,5 +59,4 @@ Python 3.10+ (stdlib only) + SQLite with WAL mode. No install, no dependencies.
 ---
 
 > **Playbook**: See README.md in project root
-> **Repo**: [GitLab](http://192.168.2.13:8929/tcdz/sweep) | [GitHub](https://github.com/plangeberg/sweep)
-> **Issues**: [sweep#1](http://192.168.2.13:8929/tcdz/sweep/-/issues/1)
+> **Repo**: [GitHub](https://github.com/plangeberg/sweep)
