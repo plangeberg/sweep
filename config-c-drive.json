@@ -1,0 +1,20 @@
+{
+    "paths": ["/mnt/c"],
+    "output": {
+        "database": "sweep-c-drive.db",
+        "log_file": "sweep-c-drive.log",
+        "status_file": "sweep-c-drive-status.json"
+    },
+    "crawler": {
+        "throttle_ms": 0,
+        "hash_files": false,
+        "max_depth": 20,
+        "skip_dirs": [
+            "node_modules", ".git", "__pycache__", ".venv", "venv",
+            "$RECYCLE.BIN", "System Volume Information", ".vs", "bin", "obj",
+            ".tox", ".mypy_cache", ".pytest_cache", ".next", ".nuxt",
+            "dist", "build", ".cache", ".npm", ".nvm",
+            "Windows", "Recovery", "$SysReset", "$WinREAgent"
+        ]
+    }
+}
